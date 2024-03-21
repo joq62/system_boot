@@ -51,7 +51,7 @@ deploy_application(ApplicationId)->
     
     ok=start_log_rd(WorkerNode,ApplicationId),   
     ok=rpc:call(WorkerNode,application,start,[ApplicationApp],5000),
-    pong=rpc:call(WorkerNode,ApplicationApp,ping,[],5000),
+    pong=rpc:call(WorkerNode,ApplicationApp,ping,[],3*5000),
     ok.
 
 %%%===================================================================

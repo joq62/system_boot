@@ -13,7 +13,7 @@ all:
 	mkdir catalog/application_dir/controller;
 	git clone https://github.com/joq62/controller.git catalog/application_dir/controller;
 	mkdir catalog/application_dir/deployment;
-	git clone https://github.com/joq62/host.git catalog/application_dir/deployment;
+	git clone https://github.com/joq62/deployment.git catalog/application_dir/deployment;
 	git clone https://github.com/joq62/system_boot.git;
 	echo Done;
 start:

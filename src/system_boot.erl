@@ -187,7 +187,7 @@ handle_info(timeout, State) ->
     
     pong=rpc:call(MainNode,log,ping,[],5000),
     pong=rpc:call(MainNode,rd,ping,[],5000),
-    pong=rpc:call(MainNode,main,ping,[],5000),
+    pong=rpc:call(MainNode,main,ping,[],4*5000),
     pong=rpc:call(MainNode,controller,ping,[],4*5000),
     pong=rpc:call(MainNode,catalog,ping,[],4*5000),
     pong=rpc:call(MainNode,deployment,ping,[],4*5000),

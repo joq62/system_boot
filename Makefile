@@ -31,6 +31,11 @@ all:
 	git status
 	echo Ok there you go!
 	#INFO: with_ebin_commit ENDED SUCCESSFUL
+start:
+	erl -pa ebin\
+	 -sname system_boot_a\
+	 -run system_boot start\
+	 -setcookie a
 build:
 	#INFO: with_ebin_commit STARTED
 	#INFO: Cleaning up to prepare build STARTED	 

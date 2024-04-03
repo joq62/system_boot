@@ -174,13 +174,14 @@ handle_info(timeout, State) ->
     [file:del_dir_r(Dir)||Dir<-?DirsToDelete],
     
     io:format("git clone main ~p~n",[{?MODULE,?LINE}]),
-    os:cmd(?MainCloneCmd),
-    
+    Clone=os:cmd(?MainCloneCmd),
+    io:format("Clone  ~p~n",[{Clone,?MODULE,?LINE}]),
+
     io:format("start vm and main  ~p~n",[{?MODULE,?LINE}]),
     {ok,HostName}=net:gethostname(),
     CookieStr=atom_to_list(erlang:get_cookie()),
     NodeName="main"++"_"++CookieStr,
-    ErlArgs="-pa "++?MainEbinPath++" "++"-sname "++NodeName++" "++"-setcookie "++CookieStr,
+    ErlArgs="-pa "++?MainEbinPath++" "++" "++"-setcookie "++CookieStr,
     {ok,MainNode}=slave:start(HostName,NodeName,ErlArgs),
     ok=rpc:call(MainNode,application,load,[main],3*5000),
     ok=rpc:call(MainNode,application,start,[main],3*5000),

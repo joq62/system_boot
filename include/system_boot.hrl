@@ -1,9 +1,4 @@
+-define(DirsToDelete,["main","application_dir","deployment_specs","catalog_specs"]).
 
--ifdef(PRODUCTION).
--define(ENVIRONMENT, production).
--else.
--define(ENVIRONMENT, test).
--endif.
-
-
--define(ApplicationDir,"catalog/application_dir").
+-define(MainCloneCmd,"git clone https://github.com/joq62/main.git").
+-define(MainEbinPath,"main/ebin").

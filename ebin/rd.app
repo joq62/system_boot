@@ -1,10 +1,10 @@
-{application,system_boot,
+{application,rd,
              [{description,"An OTP application"},
               {vsn,"0.1.0"},
               {registered,[]},
-              {mod,{system_boot_app,[]}},
+              {mod,{rd_app,[]}},
               {applications,[kernel,stdlib]},
               {env,[]},
-              {modules,[system_boot,system_boot_app,system_boot_sup]},
+              {modules,[heartbeat,lib_rd,rd,rd_app,rd_store,rd_sup]},
               {licenses,["Apache-2.0"]},
               {links,[]}]}.

@@ -15,7 +15,6 @@
 %%--------------------------------------------------------------------
 
 -include("log.api").
--include("controller.hrl").
 -include("system_boot.hrl").
 
 %% API
@@ -110,13 +109,9 @@ init([]) ->
     
 
     %% Start catalog
-    ok=lib_system_boot:deploy_application("catalog"),
-    ok=lib_system_boot:deploy_application("host"),
-    ok=lib_system_boot:deploy_application("deployment"),
-    ok=lib_system_boot:deploy_application("controller"),
+   
     
-    
-%    ?LOG_NOTICE("Server started ",[?MODULE]),
+    ?LOG_NOTICE("Server started ",[?MODULE]),
     {ok, #state{
     
 	   },0}.
@@ -172,6 +167,33 @@ handle_cast(UnMatchedSignal, State) ->
 	  {stop, Reason :: normal | term(), NewState :: term()}.
 
 handle_info(timeout, State) ->
+
+    io:format("sleep for 2 min ensure that networking is up  ~p~n",[{?MODULE,?LINE}]),
+   %timer:sleep(2*60*1000),
+    io:format("clean up all dirs  ~p~n",[{?MODULE,?LINE}]),
+    [file:del_dir_r(Dir)||Dir<-?DirsToDelete],
+    
+    io:format("git clone main ~p~n",[{?MODULE,?LINE}]),
+    os:cmd(?MainCloneCmd),
+    
+    io:format("start vm and main  ~p~n",[{?MODULE,?LINE}]),
+    {ok,HostName}=net:gethostname(),
+    CookieStr=atom_to_list(erlang:get_cookie()),
+    NodeName="main"++"_"++CookieStr,
+    ErlArgs="-pa "++?MainEbinPath++" "++"-sname "++NodeName++" "++"-setcookie "++CookieStr,
+    {ok,MainNode}=slave:start(HostName,NodeName,ErlArgs),
+    ok=rpc:call(MainNode,application,load,[main],3*5000),
+    ok=rpc:call(MainNode,application,start,[main],3*5000),
+    
+    pong=rpc:call(MainNode,log,ping,[],5000),
+    pong=rpc:call(MainNode,rd,ping,[],5000),
+    pong=rpc:call(MainNode,main,ping,[],5000),
+    pong=rpc:call(MainNode,controller,ping,[],4*5000),
+    pong=rpc:call(MainNode,catalog,ping,[],4*5000),
+    pong=rpc:call(MainNode,deployment,ping,[],4*5000),
+    pong=rpc:call(MainNode,git_handler,ping,[],4*5000),
+
+    io:format("there you go  ~p~n",[{?MODULE,?LINE}]),  
        
     {noreply, State};
 

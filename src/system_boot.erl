@@ -186,6 +186,7 @@ handle_info(timeout, State) ->
     ok=rpc:call(MainNode,application,load,[main],3*5000),
     ok=rpc:call(MainNode,application,start,[main],3*5000),
     
+    timer:sleep(30*1000),
     pong=rpc:call(MainNode,log,ping,[],5000),
     pong=rpc:call(MainNode,rd,ping,[],5000),
     pong=rpc:call(MainNode,main,ping,[],4*5000),

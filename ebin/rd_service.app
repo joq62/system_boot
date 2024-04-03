@@ -1,10 +1,10 @@
-{application,log,
+{application,rd_service,
              [{description,"An OTP application"},
               {vsn,"0.1.0"},
               {registered,[]},
-              {mod,{log_app,[]}},
+              {mod,{rd_service_app,[]}},
               {applications,[kernel,stdlib]},
               {env,[]},
-              {modules,[lib_log,log,log_app,log_server,log_sup]},
+              {modules,[heartbeat,lib_rd,rd,rd_store]},
               {licenses,["Apache-2.0"]},
               {links,[]}]}.

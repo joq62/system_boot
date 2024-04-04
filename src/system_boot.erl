@@ -169,7 +169,7 @@ handle_cast(UnMatchedSignal, State) ->
 handle_info(timeout, State) ->
 
     io:format("sleep for 2 min ensure that networking is up  ~p~n",[{?MODULE,?LINE}]),
-   %timer:sleep(2*60*1000),
+   timer:sleep(2*60*1000),
     io:format("clean up all dirs  ~p~n",[{?MODULE,?LINE}]),
     [file:del_dir_r(Dir)||Dir<-?DirsToDelete],
     

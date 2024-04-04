@@ -1,3 +1,3 @@
 #!/bin/bash
-/usr/bin/erl -pa /home/ubuntu/control/ebin -sname control_a  -setcookie a -run control start -noinput &
+/usr/bin/erl -pa /home/ubuntu/main/ebin -sname system_boot_a  -setcookie a -run system_boot start -hidden -noinput &
 echo "$!" > /run/sys_boot.pid

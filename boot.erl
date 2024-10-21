@@ -24,6 +24,8 @@
 %%--------------------------------------------------------------------
 start()->
     os:cmd("rm -rf logs"),
+    os:cmd("rm -rf application_specs"),
+    os:cmd("rm -rf host_specs"),
     ok=application:start(ctrl),
     ok.
 %%%===================================================================
